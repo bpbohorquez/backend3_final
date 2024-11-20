@@ -2,7 +2,9 @@ import { faker } from "@faker-js/faker";
 
 export const generateUser = () => {
   return {
-    name: faker.person.firstName() + faker.person.lastName(),
+    first_name: faker.person.firstName(),
+    last_name: faker.person.lastName(),
+    email: faker.internet.email(),
     password: "coder123",
     role: Math.random() < 0.25 ? "admin" : "user",
     pets: [],

@@ -7,10 +7,11 @@ import petsRouter from "./routes/pets.router.js";
 import adoptionsRouter from "./routes/adoption.router.js";
 import sessionsRouter from "./routes/sessions.router.js";
 import mocksRouter from "./routes/mocks.router.js";
+import config from "./utils/config.js";
 
 const app = express();
 const PORT = 8080;
-const connection = mongoose.connect(`URL DE MONGO`);
+const connection = mongoose.connect(config.mongoURL);
 
 app.use(express.json());
 app.use(cookieParser());

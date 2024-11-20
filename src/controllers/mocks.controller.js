@@ -1,6 +1,8 @@
 import { generateRandomPet, generateUser } from "../utils/faker.js";
 import PetDTO from "../dto/Pet.dto.js";
+import UserDTO from "../dto/User.dto.js";
 import { petsService } from "../services/index.js";
+import { usersService } from "../services/index.js";
 
 export const mockPets = async (req, res) => {
   let result = [];
@@ -21,24 +23,32 @@ export const generateMockData = async (req, res) => {
   let birthDate;
 
   for (let i = 0; i < numPets; i++) {
-    fakePet = generateRandomPet();
-    name = fakePet.name;
-    specie = fakePet.specie;
-    birthDate = fakePet.birthDate;
+    let { name, specie, birthDate } = generateRandomPet();
 
     let pet = PetDTO.getPetInputFrom({ name, specie, birthDate });
     let result = await petsService.create(pet);
   }
 
   for (let i = 0; i < numUsers; i++) {
-    fakePet = generateRandomPet();
-    name = fakePet.name;
-    specie = fakePet.specie;
-    birthDate = fakePet.birthDate;
+    let { first_name, last_name, email, password, role, pets } = generateUser();
 
-    let pet = PetDTO.getPetInputFrom({ name, specie, birthDate });
-    let result = await petsService.create(pet);
+    let result = await usersService.create({
+      first_name,
+      last_name,
+      email,
+      password,
+      role,
+      pets,
+    });
   }
 
-  res.send({ status: "success", payload: "Datos generados exitosamente" });
+  res.send({
+    status: "success",
+    payload:
+      "Datos generados exitosamente. " +
+      numPets +
+      " mascotas creadas. " +
+      numUsers +
+      " usuarios creados",
+  });
 };
