@@ -4,7 +4,8 @@ import cookieParser from "cookie-parser";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import swaggerUiExpress from "swagger-ui-express";
-
+import { createHash, passwordValidation } from "./utils/index.js";
+import jwt from "jsonwebtoken";
 import usersRouter from "./routes/users.router.js";
 import petsRouter from "./routes/pets.router.js";
 import adoptionsRouter from "./routes/adoption.router.js";
@@ -13,6 +14,7 @@ import mocksRouter from "./routes/mocks.router.js";
 import config from "./utils/config.js";
 
 import __dirname from "./utils/index.js";
+import { addLogger } from "./utils/logger.js";
 
 const app = express();
 const PORT = 8080;
@@ -20,6 +22,8 @@ const connection = mongoose.connect(config.mongoURL);
 
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(addLogger);
 
 app.use("/api/users", usersRouter);
 app.use("/api/pets", petsRouter);

@@ -3,6 +3,7 @@ import PetDTO from "../dto/Pet.dto.js";
 import UserDTO from "../dto/User.dto.js";
 import { petsService } from "../services/index.js";
 import { usersService } from "../services/index.js";
+import { logger } from "../utils/logger.js";
 
 export const mockPets = async (req, res) => {
   let result = [];
